@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sepetini yönet, indirimini gör ve sipariş toplamını hesapla.">
+  <title>Sepetim | Mini Alışveriş Deneyimi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="announcement">Ücretsiz kargo için sepetini keşfetmeye devam et ✦</div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Sepetim ana sayfa"><span class="brand-mark">s.</span><span>sepetim</span></a>
+    <nav aria-label="Ana menü"><a href="#products">Ürünler</a><a href="#cart">Sepetim</a></nav>
+    <a class="header-cart" href="#cart">Sepet <span id="header-count">0</span></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">KÜÇÜK MUTLULUKLAR, GÜZEL SEÇİMLER</span>
+        <h1>İhtiyacın olan<br><em>biraz mutluluk.</em></h1>
+        <p>Günlük hayatına eşlik edecek favorilerini seç. Sepetini oluştur, indirimini gör ve siparişini hesapla.</p>
+        <a class="primary-link" href="#products">Alışverişe başla <span>↗</span></a>
+      </div>
+      <div class="hero-art" aria-label="Alışveriş çantası illüstrasyonu">
+        <div class="sun"></div><div class="art-card card-back"></div>
+        <div class="shopping-bag"><div class="bag-handle"></div><span>good<br>things.</span></div>
+        <div class="sparkle sparkle-one">✳</div><div class="sparkle sparkle-two">✦</div>
+        <div class="art-caption">curated for you<br><b>№ 01 / 2026</b></div>
+      </div>
+    </section>
+
+    <section class="section-heading" id="products">
+      <div><span class="eyebrow">KOLEKSİYONUMUZ</span><h2>Bugünün favorileri</h2></div>
+      <p>Günlük hayatına küçük bir dokunuş.</p>
+    </section>
+
+    <section class="product-grid" aria-label="Ürün listesi">
+      <article class="product-card">
+        <div class="product-visual visual-cream"><span class="product-tag">ÇOK SEVİLEN</span><div class="product-emoji">☕</div></div>
+        <div class="product-info"><div><h3>Seramik Kupa</h3><p>Mat dokulu · 350 ml</p></div><strong>₺ 289</strong></div>
+        <button class="add-button" data-add="mug">Sepete ekle <span>+</span></button>
+      </article>
+      <article class="product-card">
+        <div class="product-visual visual-lilac"><div class="product-emoji">📓</div></div>
+        <div class="product-info"><div><h3>Günlük Defter</h3><p>Hardcover · 160 sayfa</p></div><strong>₺ 349</strong></div>
+        <button class="add-button" data-add="notebook">Sepete ekle <span>+</span></button>
+      </article>
+      <article class="product-card">
+        <div class="product-visual visual-peach"><div class="product-emoji">🕯️</div></div>
+        <div class="product-info"><div><h3>Vanilya Mum</h3><p>Doğal soya · 200 gr</p></div><strong>₺ 429</strong></div>
+        <button class="add-button" data-add="candle">Sepete ekle <span>+</span></button>
+      </article>
+    </section>
+
+    <section class="cart-section" id="cart">
+      <div class="cart-title"><div><span class="eyebrow">ALIŞVERİŞİN</span><h2>Sepetinin özeti</h2></div><span class="cart-count"><b id="cart-count">0</b> ürün</span></div>
+      <div class="cart-layout">
+        <div class="cart-items" id="cart-items">
+          <div class="empty-cart"><span>🛍️</span><h3>Sepetin henüz boş</h3><p>Beğendiğin ürünleri sepete ekleyerek başlayabilirsin.</p></div>
+        </div>
+        <aside class="summary-card">
+          <h3>Sipariş özeti</h3>
+          <div class="summary-line"><span>Ara toplam</span><strong id="subtotal">₺ 0,00</strong></div>
+          <div class="summary-line"><span>İndirim</span><strong class="discount" id="discount">- ₺ 0,00</strong></div>
+          <div class="summary-line"><span>KDV (%20)</span><strong id="tax">₺ 0,00</strong></div>
+          <div class="summary-line total"><span>Genel toplam</span><strong id="grand-total">₺ 0,00</strong></div>
+          <p class="discount-note" id="discount-note">₺ 1.000 ve üzeri alışverişte %10 indirim fırsatı.</p>
+          <button class="checkout-button" id="checkout-button">Siparişi tamamla <span>→</span></button>
+          <p class="secure-note">♡ Güvenli ve keyifli alışveriş</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#"><span class="brand-mark">s.</span><span>sepetim</span></a><p>İyi seçimler, güzel günler getirir.</p><span>© 2026 Sepetim</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

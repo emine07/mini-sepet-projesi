@@ -1,0 +1,131 @@
+
+### 1. Genel kod akışı
+
+1. `products` dizisinin görevi ne? İçindeki her ürün hangi bilgilere sahip?
+*Cevap* products dizisi, projenin veri kaynağı (mini veri tabanı) görevini üstlenir ve ekranda listelenecek tüm ürünlerin bilgilerini tek bir yapıda toplar. JavaScript bu dizinin içindeki verileri okuyarak HTML tarafındaki ürün kartlarını otomatik oluşturur ve sepete ekleme/hesaplama işlemlerinde bu bilgileri kullanır.
+2. `cart` değişkeni başlangıçta neden boş bir dizi?
+*Cevap* cart değişkeni, kullanıcının alışveriş sepetine eklediği ürünleri dinamik olarak depolayan ve yöneten ana veri listesidir. Başlangıçta boş bir dizi (let cart = [];) olarak tanımlanmasının temel nedeni, uygulama ilk açıldığında kullanıcının henüz hiçbir ürünü sepete eklememiş olması ve ilerleyen aşamalarda üzerine yeni ürünler eklenecek esnek bir alana ihtiyaç duyulmasıdır.
+3. `TAX_RATE`, `DISCOUNT_LIMIT` ve `DISCOUNT_RATE` neden `const` ile tanımlanmış olabilir?
+*Cevap* TAX_RATE, DISCOUNT_LIMIT ve DISCOUNT_RATE değişkenlerinin const ile tanımlanmasının temel nedeni, bu değerlerin uygulamanın iş kurallarını temsil eden sabit katsayılar olması ve program çalışırken değişmemesi gerektiğidir.
+4. `querySelector()` ne yapar? Örneğin `subtotalElement` hangi HTML elemanını seçiyor?
+*Cevap* document.querySelector(), HTML belgesi (DOM) içerisinde belirttiğin CSS seçicisine (ID #, sınıf . veya etiket adı) uyan ilk HTML elemanını bulup JavaScript tarafına getirir. Bu sayede JavaScript ile o HTML elemanının içindeki metni değiştirebilir, stilini güncelleyebilir veya ona tıklama olayı ekleyebilirsin.
+subtotalElement, sepet özetindeki Ara Toplam (Subtotal) tutarının ekranda gösterildiği HTML elemanını (genellikle <span> veya <p> etiketini) seçer.
+5. `renderCart()` fonksiyonu uygulamada hangi işleri yapıyor?
+*Cevap* renderCart() fonksiyonu, JavaScript hafızasındaki (cart dizisi) güncel sepet verilerini okuyarak HTML sayfasına (ekrana) çizen ve arayüzü güncelleyen ana görüntüleme fonksiyonudur. Sepete ürün eklendiğinde, adet artırılıp azaltıldığında veya ürün silindiğinde ekranın son haline gelmesini bu fonksiyon sağlar.
+### 2. Fonksiyonları anlama
+
+6. `formatPrice()` fonksiyonuna `289` gönderilirse ne yapmasını bekleriz?
+*Cevap* formatPrice() fonksiyonuna 289 gönderildiğinde, bu ham sayısal değeri kullanıcı arayüzünde düzgün ve standart bir para birimi formatında görünecek metne ("289,00 TL" veya "289.00 TL" şeklinde) dönüştürmesini bekleriz.
+7. `showToast()` fonksiyonu hangi iki işlemi gerçekleştiriyor?
+*Cevap* showToast() fonksiyonu, kullanıcıya ekranın köşesinde kısa süreli bir bildirim kutusu (toast message) göstermek için mesajı ekrana yazıp görünür hale getirme ve belirli bir süre sonra bu bildirimi otomatik olarak gizleme olmak üzere iki temel işlemi gerçekleştirir.
+8. `addToCart()` içinde ürün önce nereden bulunuyor, daha sonra sepet içinde olup olmadığı nasıl kontrol ediliyor?
+*Cevap* addToCart() fonksiyonunda, eklenmek istenen ürün önce products dizisinin içinden bulunuyor, daha sonra sepet içinde olup olmadığı ise cart dizisi üzerinde find() (veya benzeri bir arama) metodu kullanılarak kontrol ediliyor.
+9. `changeQuantity()` fonksiyonuna `-1` gönderilirse ne olması gerekiyor?
+*Cevap* changeQuantity() fonksiyonuna -1 gönderildiğinde, ilgili ürünün sepet içindeki adedinin 1 azaltılması, eğer ürünün adedi bu işlem sonunda 0 veya daha küçük bir değere düşerse ürünün sepetten tamamen silinmesi ve ardından ekranın güncel haliyle yeniden çizilmesi gerekir.
+10. `removeFromCart()` neden `filter()` kullanıyor?
+*Cevap* removeFromCart() fonksiyonunda filter() metodunun kullanılmasının temel nedeni, silinmek istenen ürün hariç diğer tüm ürünleri koruyarak orijinal diziyi bozmadan yeni ve temiz bir sepet listesi oluşturmaktır.
+11. `calculateTotals()` hangi dört değeri hesaplayıp geri döndürüyor?
+*Cevap* calculateTotals() fonksiyonu, sepetteki ürünlerin adet ve fiyat bilgilerini kullanarak ara toplam (subtotal), indirim tutarı (discount), KDV tutarı (tax) ve genel toplam (total) olmak üzere dört temel değeri hesaplayıp bir obje ({ subtotal, discount, tax, total }) halinde geri döndürür.
+12. `renderCart()` içinde `map()` neden kullanılmış?
+*Cevap* renderCart() fonksiyonu içinde map() metodunun kullanılmasının temel nedeni, cart dizisindeki her bir ürün objesini okuyarak HTML kartı şablonuna (metne) dönüştürmek ve tüm ürünleri tek seferde ekrana basılabilir bir listeye çevirmektir.
+
+### 3. Hata avı
+
+Aşağıdaki bölümlerde sorun olabilecek satırları bul. Her biri için şu üç şeyi yaz:
+
+- Sorunlu satır veya bölüm hangisi?
+- Neden hatalı?
+- Nasıl düzelttin?
+
+| No | İncelenecek bölüm | Bulduğun sorun / açıklaman |
+|---|---|---|
+| 1 | Ürün ekleme butonlarının event listener bölümü | |
+// Sorunlu bölüm: document.querySelectorAll("[data-add]") içindeki addToCart(button.dataset.id); satırı.
+Neden hatalı: Butonlar HTML'de data-add niteliğiyle seçilmesine rağmen içinden dataset.id okunmaya çalışılmış. Butonda data-id olmadığı için undefined değeri dönüyor ve "Ürün bulunamadı" uyarısı veriyordu.
+Nasıl düzelttim: button.dataset.id ifadesini button.dataset.add olarak değiştirdim.
+| 2 | `products.find()` kullanılan bölüm | |
+// Sorunlu bölüm: addToCart() içindeki const selectedProduct = products.find(product => product.id = productId); satırı.
+Neden hatalı: Karşılaştırma operatörü (===) yerine tek eşittir (=) atama operatörü kullanılmış. Bu yüzden ilk ürünün id değerini tıklanan ürünün id değerine eşitliyor ve her zaman ilk ürünü (Seramik Kupa) sepete ekliyordu.
+Nasıl düzelttim: Tek eşittir (=) yerine sıkı eşitlik (===) operatörünü kullandım.
+| 3 | Sepetteki ürünün adetini artıran bölüm | |
+// Sorunlu bölüm: addToCart() içindeki existingItem.quantity = existingItem.quantity + "1"; satırı.
+Neden hatalı: 1 sayısı tırnak içinde metin ("1") olarak yazıldığı için matematiksel toplama yapmak yerine yan yana birleştirme yapıyordu (örneğin adet 1 iken tekrar eklenince 2 yerine "11" oluyordu).
+Nasıl düzelttim: Tırnak işaretlerini kaldırıp existingItem.quantity + 1 şeklinde sayı olarak topladım.
+| 4 | `calculateTotals()` içindeki `reduce()` işlemi | |
+// Sorunlu bölüm: let subtotal = cart.reduce((total, item) => total + item.price * item.quantity, "0"); satırı.
+Neden hatalı: reduce() fonksiyonunun başlangıç değeri sayı 0 yerine metin "0" olarak verilmiş. İlk adımda total metin olduğu için hesaplanan tutarları toplamak yerine yan yana metin olarak ekliyordu (örneğin "0289349" gibi).
+Nasıl düzelttim: Başlangıç değerini tırnaksız olarak 0 yaptım (ayrıca products dizisindeki "289" fiyatını da sayı 289 olarak düzelttim).
+| 5 | Toplam ürün adedini hesaplayan bölüm | |
+// Sorunlu bölüm: renderCart() içindeki headerCountElement.textContent = cart.length; satırı.
+Neden hatalı: Üst menüdeki sayaç (headerCountElement) için totalQuantity yerine cart.length yazılmış. cart.length sadece sepetteki farklı ürün çeşidi sayısını gösterir; aynı üründen 3 tane eklendiğinde 3 yerine 1 gösteriyordu.
+Nasıl düzelttim: cart.length yerine tüm ürünlerin adet toplamını tutan totalQuantity değişkenini atadım.
+| 6 | KDV hesaplama satırı | |
+// Sorunlu bölüm: En üstteki const TAX_RATE = 20; sabiti ve buna bağlı const tax = taxableAmount * TAX_RATE; satırı.
+Neden hatalı: KDV oranı 0.20 (%20) yerine tam sayı 20 olarak tanımlandığı için tutarı 0.20 ile çarpmak yerine 20 katına çıkarıyordu (%2000 KDV hesaplıyordu).
+Nasıl düzelttim: TAX_RATE değerini 0.20 olarak güncelledim (ek olarak indirim sınırını da dokümana uygun şekilde >= olarak kontrol ettim).
+| 7 | Sepet boş mu kontrolü | |
+// Sorunlu bölüm: #checkout-button tıklama olayı içindeki if (cart.length = 0) satırı.
+Neden hatalı: Karşılaştırma (===) yerine atama (=) operatörü kullanılmış. Bu satır çalıştığı anda sepette ürün olsa bile cart.length değerini 0 yaparak sepeti siliyor ve if bloğu 0 (falsy) döndüğü için boş sepet uyarısını atlayıp siparişi onaylıyordu.
+Nasıl düzelttim: Tek eşittir (=) yerine if (cart.length === 0) şeklinde karşılaştırma operatörü kullandım.
+
+
+### 4. Veri türleri
+
+13. `products` dizisinde fiyatlardan biri neden diğerlerinden farklı davranabilir?
+Çünkü products dizisindeki ilk ürün olan Seramik Kupa'nın fiyatı sayı (number) yerine tırnak içinde metin (string — price: "289") olarak tanımlanmıştır. Diğer ürünlerin fiyatları sayı olduğu için matematiksel işlemlere doğru girerken, "289" değeri metin olduğu için toplama işlemlerinde sayıları toplamak yerine yan yana birleştirme hatasına yol açar.
+14. `"289" + 1` işleminin sonucu ne olur? Peki `289 + 1`?
+• "289" + 1 işleminin sonucu "2891" (metin / string) olur. Çünkü JavaScript'te + operatörünün bir tarafı metin ise toplama değil, metin birleştirme (concatenation) yapılır.
+• 289 + 1 işleminin sonucu 290 (sayı / number) olur. Çünkü her iki değer de sayı türündedir ve normal matematiksel toplama işlemi gerçekleşir.
+15. `typeof` operatörünü kullanarak ürün fiyatlarının türlerini nasıl kontrol edersin?
+Tarayıcı konsolunda (Console) tek bir ürün için typeof products.price yazarak veya tüm ürünleri tek seferde kontrol etmek için products.forEach(urun => console.log(urun.name, typeof urun.price)) kodunu çalıştırarak hangi ürünün "string", hangisinin "number" olduğunu görebilirim.
+16. `quantity` değerinin sayı olarak kalması neden önemli?
+Hatalı kodda olduğu gibi adedi artırırken existingItem.quantity + "1" yapıldığında adet 2 olmak yerine "11" (metin) haline gelir ve bu durum hem ekranda yanlış adet görünmesine hem de price * quantity ile toplam ürün sayısını hesaplayan reduce() işlemlerinin bozulmasına neden olur. Tüm matematiksel hesaplamaların hatasız çalışması için quantity değerinin her zaman number (sayı) olarak kalması gerekir.
+
+
+### 5. Kendi testlerin
+
+Aşağıdaki işlemleri uygulayıp gerçek sonucu yaz:
+
+| İşlem | Uygulamanın verdiği sonuç | Beklenen sonuç |
+|---|---|---|
+| Kupa ekle | |
+	Seramik Kupa sepete 1 adet eklendi, sayaçlar 1 oldu. Ara toplam ₺289,00, KDV ₺57,80, Genel Toplam ₺346,80 olarak hesaplandı.	Ürünün 1 adet olarak listelenmesi, sayaçların 1 göstermesi ve KDV dahil doğru toplamın (₺346,80) görünmesi.
+ |
+| Kupa'yı tekrar ekle | | 
+
+Kupa adedi "11" olmak yerine 2 oldu, hem sepet hem üst menü sayacı 2 gösterdi. Ara toplam ₺578,00, Genel Toplam ₺693,60 oldu.	Aynı üründen ikinci satır açılmadan adedin 2 olması, tüm sayaçların 2 göstermesi ve tutarın iki katına çıkması.
+
+|
+| Adedi azalt | | 
+
+Sepetteki - butonuna basınca adet 2'den 1'e düştü (adet 1 iken tekrar basınca ürün sepetten silindi ve boş sepet ekranı geldi).	Adedin 1 azalması, toplamların güncellenmesi ve adet 0 olduğunda ürünün sepetten kaldırılması.
+|
+| Ürünü sil | | 
+
+"Sil" butonuna basınca ürün adedine bakılmaksızın sepetten tamamen kaldırıldı, sayaçlar 0 oldu ve "Sepetin henüz boş" ekranı göründü.	Ürünün listeden silinmesi, toplam tutarların sıfırlanması ve boş sepet uyarı ekranının açılması.
+
+|
+| 1.000 TL üzeri sepet oluştur | | 
+
+ üzeri sepet oluştur	Örneğin 3 adet Vanilya Mum (3 x 429 = ₺1.287,00) eklendiğinde %10 indirim (- ₺128,70) otomatik uygulandı, KDV indirimli tutar (₺1.158,30) üzerinden ₺231,66 hesaplandı ve Genel Toplam ₺1.389,96 oldu.	1.000 TL ve üzeri ara toplamda %10 indirim devreye girmesi, KDV'nin indirim düşüldükten sonra %20 olarak eklenmesi.
+
+|
+| Boş sepetle siparişi tamamla | |
+
+Sepet boşken "Siparişi Tamamla" butonuna tıklandığında sipariş onaylanmadı ve ekranda "Önce sepetine ürün eklemelisin." uyarısı çıktı.	Siparişin tamamlanmaması ve kullanıcıya önce sepete ürün eklemesi gerektiğini bildiren uyarı mesajının gösterilmesi.
+|
+
+### 6. Kısa değerlendirme
+
+17. En çok zorlandığın hata hangisiydi? Neden?
+veri türleri.
+18. Console ekranında gördüğün bir hata mesajını kendi cümlelerinle açıkla.
+sepete ürün eklemek istediğimde ürün bulunamadı dedi bende sebebini araştırdım.
+19. Bir sonraki benzer hatayı kendin bulabilmek için hangi adımları izlersin? 
+noktalama işaretlerine ve id,değişken isimlerine ve fonksiyonu nasıl yazdığıma vb dikkat ederim. 
+20. Projeye kendi eklediğin bir özellik var mı? Varsa nasıl çalışıyor?
+
+Evet, projeye "İndirim Limitine Kalan Tutarı Dinamik Gösterme" özelliğini ekledim. Bu özellik şu adımlarla çalışıyor:
+• Eleman Seçimi: HTML dosyasındaki hazır #discount-note etiketini JavaScript tarafında discountNoteElement değişkenine tanımladım.
+• Kalan Tutar Hesabı: calculateTotals() fonksiyonu içinde sepetin ara toplamı (subtotal) 1.000 TL indirim sınırının altındaysa DISCOUNT_LIMIT - subtotal işlemiyle aradaki farkı (remaining) hesapladım; sınır aşıldıysa bu değeri 0 olarak belirledim.
+• Dinamik Mesaj Gösterimi: renderCart() fonksiyonu her çalıştığında sepetin durumunu kontrol ediyor. Sepet boşsa standart kampanya duyurusunu gösteriyor, 1.000 TL'nin altındaysa indirim kazanmak için sepete ne kadar daha ürün eklenmesi gerektiğini formatPrice() ile biçimlendirip yazdırıyor, 1.000 TL ve üzerine çıkıldığında ise "Tebrikler! 1.000 TL üzeri %10 indirim kazandın." mesajını ekranda gösteriyor.
