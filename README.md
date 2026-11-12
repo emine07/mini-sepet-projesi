@@ -26,8 +26,8 @@ Yazılım alanında çalışan, becerilerini geliştiren ve benzer projeler üze
 
 #Yazılım #YazılımGeliştirme #GitHub #JavaScript #Frontend #WebDevelopment
 
-<img width="544" height="562" alt="Ekran görüntüsü 2026-11-12 224136" src="https://github.com/user-attachments/assets/5be3463f-0eae-462c-8a6a-6b1ad4c17b0a" />
 <img width="893" height="570" alt="Ekran görüntüsü 2026-11-12 224733" src="https://github.com/user-attachments/assets/f2be9891-b6f1-44db-a52e-b2e24b94a373" />
+
 <img width="882" height="568" alt="Ekran görüntüsü 2026-11-12 224749" src="https://github.com/user-attachments/assets/2e60ab8a-1eda-4d06-8761-99f25a343ab5" />
 
 
